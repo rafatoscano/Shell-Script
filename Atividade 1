@@ -1,1 +1,3 @@
+#!/bin/bash
 
+echo "Todos serão aprovados com média 100"
