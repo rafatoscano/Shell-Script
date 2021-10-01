@@ -1,0 +1,12 @@
+Ranking Meninos Ranking Meninas
+
+1  Rafael	1  Maria
+2  Rinaldo	2  Angela
+3  Pedro	3  Carol
+4  Lucas	4  Rebeca
+5  João	5  Raquel
+6  Jose	6  Janaina
+7  Juaquim	7  Joana
+8  Marcio	8  Carla
+9  Antonio	9  Vera
+10 Rodrigo	10 Paula
