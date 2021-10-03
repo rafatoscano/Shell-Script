@@ -1,95 +1,95 @@
 #! /bin/bash
 
-function opc1() {
+function opcao1() {
 	clear
 	echo -e "Página Web > $1\n"
 	cat temp/index | sed -r 's/$/as/g' | tr '\n' '2' | sed 's/<[^>]*>//g' | sed 's/as2/\n/g'
 	read -p "Informe se pretende continuar: "
 }
 
-function opc2() {
-	rm temp/novolink
-	cat temp/index | grep -o -E "(<a. *?>. *?</a>)" > temp/links
-	cat temp/liks | grep -o -E '"([^"]*)"' | tr '"' ' ' | sed -r "s/ //g" &> temp/linksvazios
+function opcao2() {
+	rm temp/novourl
+	cat temp/index | grep -o -E "(<a. *?>. *?</a>)" > temp/urls
+	cat temp/urls | grep -o -E '"([^"]*)"' | tr '"' ' ' | sed -r "s/ //g" &> temp/urlsvazios
 
 	contador-0
 	while read -r linha; do
 		contador=$(( $contador +1 ))
-		linhas=$(cat temp/linksvazios | sed $contador'!d')
+		linhas=$(cat temp/urlsvazios | sed $contador'!d')
 		if [ $(echo $linhas | grep -Eo '^.') == "/" ]; then
-			echo "$site$linha" >> temp/novolink
+			echo "$url$linha" >> temp/novourl
 		else
-			echo "$linha" >> temp/novolink
+			echo "$linha" >> temp/novourl
 		fi
-	done < temp/links
+	done < temp/urls
 	
-function opc3() {
+function opcao3() {
        	clear
-  	echo -e "\nLinks disponíveis!\n"
-  	cat -n temp/novolink
-  	read -p "Informe um valor do link: " valor
+  	echo -e "\nurls disponíveis!\n"
+  	cat -n temp/novourl
+  	read -p "Informe um valor do url: " valor
   	cont=0
   	while read -r linha; do
   	cont=$(( $cont + 1 ))
-  	lin=$(cat temp/linksvazios | sed $cont'!d')
+  	lin=$(cat temp/urlsvazios | sed $cont'!d')
     		if [ $num -eq $cont ]; then
-        		site=$lin
+        		url=$lin
         		wget $lin -O temp/index &> /dev/null
     		fi
-  	done < temp/linksvazios	
+  	done < temp/urlsvazios	
 }
 
-function opc4() {
-       	cat temp/index | grep -o -E '(<img.*?src=["])([^"]*)(["].*?\/?>)' | sed -r 's/(<img.*?src=["])//g' | sed -r 's/(["].*?\/?>)//g' &> temp/linksimg
+function opcao4() {
+       	cat temp/index | grep -o -E '(<img.*?src=["])([^"]*)(["].*?\/?>)' | sed -r 's/(<imagem.*?src=["])//g' | sed -r 's/(["].*?\/?>)//g' & > temp/urlsimagem
 
 	contador=0
-  	rm temp/linksimagem1 &> /dev/null
+  	rm temp/urlsimagem1 &> /dev/null
   	while read -r linha; do
     	contador=$(( $contador + 1 ))
-    	linhas=$(cat temp/linksimagem | sed $contador'!d')
+    	linhas=$(cat temp/urlsimagem | sed $contador'!d')
     	if [ $(echo $linhas | grep -Eo '^.') == "/" ]; then
-      		echo "$site$linha" >> temp/linksimg1
+      		echo "$url$linha" >> temp/urlsimagem1
     	else
-      		echo "$linha" >> temp/linksimg1
+      		echo "$linha" >> temp/urlsimagem1
     	fi
-  	done < temp/linksimagem
+  	done < temp/urlsimagem
 
-  	cat -n temp/linksimagem1 &> /dev/null
+  	cat -n temp/urlsimagem1 &> /dev/null
   	if [ $? != 0 ]; then
     		echo -e "\nAusencia de imagens!\n"
   	else
-    		cat -n temp/linksimagem1
+    		cat -n temp/urlsimagem1
   	fi
 }
 
-function opc5() {
+function opcao5() {
   	clear
-  	cat -n temp/linksimagem1 &> /dev/null
+  	cat -n temp/urlsimagem1 &> /dev/null
   	if [ $? != 0 ]; then
     		echo "Sorry! Unable to start the download!"
   	else
     		echo -e "\nDownloads to start!\n"
-    		cat -n temp/linksimagem1
+    		cat -n temp/urlsimagem1
     		read -p "Informe o valor para download: " valor
  	fi
 
-  	cont=0
+  	contar=0
  	while read -r linha; do
   	cont=$(( $cont + 1 ))
-  	lin=$(cat temp/linksimg1 | sed $cont'!d')
+  	lin=$(cat temp/urlsimagem1 | sed $cont'!d')
     		if [ $num -eq $cont ]; then
     		wget $lin &> /dev/null
     		sleep 2
     		echo -e "\nDownload Concluído!\n"
     		fi
-  	done < temp/linksimg1
+  	done < temp/urlsimagem1
 }
 
-function opc6 () {
+function opcao6 () {
   	rm temp/index &> /dev/null
-  	rm temp/links &> /dev/null
-  	rm temp/linksimagem &> /dev/null
-  	rm temp/linksimagem1 &> /dev/null
-  	rm temp/linksvazios &> /dev/null
+  	rm temp/urls &> /dev/null
+  	rm temp/urlsimagem &> /dev/null
+  	rm temp/urlsimagem1 &> /dev/null
+  	rm temp/urlsvazios &> /dev/null
   	exit 0
 }

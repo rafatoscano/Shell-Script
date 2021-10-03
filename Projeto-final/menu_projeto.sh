@@ -4,6 +4,7 @@ source codigo_projeto.sh
 url=$1
 read -p 'Informe a url: ' url
 wget $url -o temp/index $> /dev/null
+echo $?
 if [ $? != 0 ]; then
         echo "URL NÃO ENCONTRADA"
         exit 0
@@ -13,8 +14,8 @@ while True; do
         echo -e " #### MENU #### "
         echo -e "
                 1- Visualizar a Página Web
-                2- Lista de Links
-                3- Acesso aos links
+                2- Lista de urls
+                3- Acesso aos urls
                 4- Exibir Imagem
                 5- Download de Imagem
                 6- Exit
